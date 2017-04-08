@@ -379,26 +379,19 @@ seq8 |> Seq.iter (printf "%i ")
 let fibb = Seq.unfold (fun state -> Some(fst state + snd state, (snd state, fst state + snd state))) (0,1)
 Seq.take 20 fibb
 
-let rec cc amount coins =
-  if amount = 0
-  then 1
-  else 
-    if (amount < 0 || List.length coins = 0)
-    then 0
-    else cc amount (List.tail coins) + cc (amount - List.head coins) coins
-
-cc 100 (List.rev [50; 25; 10; 5; 1])
+// coins
 
 type Anniversary =
  Birthday of string * int * int * int
  | Wedding of string * string * int * int * int
  | Death of string * int * int * int
-
-Birthday ("someone", 2014, 5, 4)
-// Birthday "someone" 2012 11 7
-let today = Birthday ("someone", 2014, 5, 4)
+ 
+ 
+Birthday ("someone", 2000, 5, 4)
+// type?
+let today = Birthday ("someone", 2000, 5, 4)
 // today
-// Birthday "someone" 2012 11 7
+// type?
 
 
 let (kurtCobain : Anniversary) = Birthday ("Kurt Cobain", 1967, 2, 20)
@@ -430,7 +423,7 @@ List.map who anniversaries
 *)
 
 type Point = { x  : float; y : float }
-              
+
 let a = { x = 13.22 ; y = 8.99 }
 let b = { a with y = 666.13 }
 let absPoint a = sqrt (a.x*a.x + a.y*a.y)
@@ -439,8 +432,8 @@ Some 1
 None
 Some "str" // type?
 Some 42
-Some 42 : [Nothing]  // ?
-Just 42 : [Just "str", Nothing] // ?
+Some 42 :: [None]  // ?
+Some 42 :: [Some "str", None] // ?
 
 type Option<'a> =
   Some of 'a
@@ -452,8 +445,75 @@ type 'a List =  // haskell!!!
 
 let l1 = Cons (3, (Cons (4, (Cons (5, Nil)))))
 
-let rec apply x y = match x with
-  Nil -> y
-  | Cons (head, tail) -> Cons (head, apply tail y)
+let rec apply x y = 
+  match x with
+    | Nil -> y
+    | Cons (head, tail) -> Cons (head, apply tail y)
 
 apply l1 (Cons (1, Nil))
+
+
+type Set = int -> bool
+
+
+let (a:Set) = (fun a -> true)
+
+let contains (s:Set) (a:int) = s a
+contains a 1
+
+let singletonSet b = fun a -> a = b
+let singletonSet (b:int) = fun (a:int) -> a = b
+let singletonSet b = fun (a:int) -> a = b
+let singletonSet (b:int) = fun a -> a = b
+let singletonSet = fun b -> fun (a: int) -> a = b
+let singletonSet b =
+  let answer a = a=b
+  in (answer:Set)
+
+let b = singletonSet 5
+let c = singletonSet 6
+contains b 5
+contains b 6
+
+// union, intersect, diff, filter, forAll, exists 
+
+
+
+type 'a Tree =
+  EmptyTree
+  | Node of 'a * 'a Tree * 'a Tree
+
+let singleton x = Node (x, EmptyTree, EmptyTree)
+
+let rec treeInsert x = function
+  EmptyTree -> singleton x 
+  | Node (a, left, right) -> 
+    if x = a then Node (x, left, right) 
+    else 
+      if x < a then Node (a, (treeInsert x left), right) 
+      else Node (a, left, (treeInsert x right))
+// when 'a : comparsion
+
+let list2tree list =
+ let rec l2t acc = function
+   [] -> acc
+   | (head::tail) -> l2t (treeInsert head acc) tail
+ in l2t EmptyTree list
+
+list2tree [12; 1; 6; 4; 90; 9]
+
+tree2list // сами
+
+let treesort x = x |> list2tree |> tree2list
+
+treesort [12; 1; 6; 4; 90; 9]
+
+list2tree [12; 12; 12; 13; 13; 14]
+Как будет выглядеть дерево?
+
+type 'a Tree =
+  EmptyTree
+  | Node of 'a * int * 'a Tree * 'a Tree
+
+val foldTree :
+  treeFunction:('a -> 'b -> 'b -> 'b) -> listValue:'b -> tree:'a Tree -> 'b
