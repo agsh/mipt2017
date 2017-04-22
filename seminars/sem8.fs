@@ -86,6 +86,15 @@ generate 0 42
 
 // проверить, что два дерева подобны
 
+type 'a Tree =
+  | EmptyTree
+  | Leaf of 'a
+  | Node of 'a * 'a Tree list
+
+Node(1, [Leaf 3; EmptyTree; Node(2, [])])
+
+// найти высоту дерева, EmptyTree не считаются
+
 type Tree<'LeafData,'INodeData> =
     | LeafNode of 'LeafData
     | InternalNode of 'INodeData * Tree<'LeafData,'INodeData> seq
