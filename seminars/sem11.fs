@@ -256,7 +256,21 @@ let downloadPage (url: string) = async {
     |> Async.Parallel
     |> Async.RunSynchronously
 
-
+open System.IO
+open System.Text
+// let bases = HtmlDocument.Load("http://mipt.ru/diht/bases/")
+let html = File.ReadAllText("/home/und/fsharp/bases.html")
+let bases = HtmlDocument.Parse(html)
+bases.Descendants ["td"]  
+    |> Seq.collect (fun (x:HtmlNode) -> x.Descendants ["a"])
+    // для получения ссылок вместо InnerText нужно использовать методы TryGetAttribute, Attibute или AttributeValue
+    // см. исходный код https://github.com/fsharp/FSharp.Data/blob/master/src/Html/HtmlOperations.fs
+    |> Seq.map (fun x -> x.InnerText()) 
+    |> Seq.toList
+    
+    
+    
+    
 /////////////////////////////////////////////////////////////////
 
 let rec fib x = if x <= 2I then 1I else fib(x-1I) + fib(x-2I)
