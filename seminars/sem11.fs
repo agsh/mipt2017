@@ -287,7 +287,7 @@ let duration f =
   
 // одно ядро
 duration(fun() -> 
-  [for i in 0..7 -> fib 32I]
+  [for i in 0..3 -> fib 32I]
   |> ignore
   )
 // много ядер
@@ -296,7 +296,7 @@ let fibA x = async {
 }
 
 duration (fun () ->
-  [ for i in 0..7 -> fibA 32I ]
+  [ for i in 0..3 -> fibA 32I ]
   |> Async.Parallel 
   |> Async.RunSynchronously
   |> ignore
@@ -305,12 +305,12 @@ duration (fun () ->
 let countSAS x =
   printf "%A\t" x
   duration(fun() -> 
-    [for i in 0..7 -> fib x]
+    [for i in 0..3 -> fib x]
     |> ignore
     )
   printf "\t"
   duration (fun () ->
-    [ for i in 0..7 -> fibA x]
+    [ for i in 0..3 -> fibA x]
     |> Async.Parallel 
     |> Async.RunSynchronously
     |> ignore
