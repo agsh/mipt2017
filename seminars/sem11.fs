@@ -269,8 +269,13 @@ bases.Descendants ["td"]
     |> Seq.toList
     
     
-    
-    
+let hockey = HtmlDocument.Load("http://www.sport-express.ru/hockey/world/")
+hockey.Descendants ["td"]
+    |> Seq.filter (fun (td:HtmlNode) -> td.HasClass "t_left w_100p")
+    |> Seq.map (fun x -> x.InnerText()) 
+    |> Seq.toList    
+ 
+ 
 /////////////////////////////////////////////////////////////////
 
 let rec fib x = if x <= 2I then 1I else fib(x-1I) + fib(x-2I)
