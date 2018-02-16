@@ -98,6 +98,20 @@ Seq.take 3 (Seq.initInfinite (fun i -> i + 1)) // наперёд
 // take - самостоятельно
 // получение элемента самостоятельно
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let rec take n xs = 
     if n = 0 then []
     else (List.head xs) :: (take (n-1) (List.tail xs))
@@ -158,6 +172,14 @@ b
 List.length [("Гарри Поттер", 13, 2.5);("Колобок", 1, 5.5)]
 sum для списка?
 max для списка?
+
+
+
+
+
+
+
+
 
 let rec sum xs =
     match xs with
@@ -271,6 +293,16 @@ abs (-2)
 
 
 
+
+
+
+
+
+
+
+
+
+
 let rem a b =
   let rec rem' a b = 
     match (a-b) with
@@ -290,6 +322,17 @@ let rem a b =
 let rem a b =
   let rec rem' a b = match (a-b) with | c when c < 0 -> a | _ -> rem' (a-b) b;
   sign a * sign b * rem' (abs a) (abs b)
+
+
+
+
+
+
+
+
+
+
+
 
 let rec quot' a b =
   if a < b then 0 else 1 + quot' (a-b) b
@@ -330,7 +373,21 @@ Seq.replicate 300000000 'a'
 List.replicate 300000000 'a'
 
 // zip a:'a list -> b:'b list -> ('a * 'b) list List.zip
+// самостоятельно
 List.zip [1;2;3] ['a';'b';'c']
+
+
+
+
+
+
+
+
+
+
+
+
+
 let rec zip a b =
   match (a,b) with
   | ([],_) | (_,[]) -> []
@@ -349,12 +406,24 @@ Seq.zip (Seq.initInfinite (fun x->x)) (seq ["a"; "b"; "c"])
   |> List.unzip
 
 // append a:'a list -> b:'a list -> 'a list 
-// @
+// @ самостоятельно
+
+
+
+
+
+
+
+
+
+
 
 let rec append a b =
   match a with
   | [] -> b
   | (x::xs) -> x :: (append xs b)
+
+
 
 // factorial
 let rec fac = function
@@ -362,6 +431,8 @@ let rec fac = function
   | n -> (n * fac (n-1I))
 
 fac 300000I
+
+// аккумулятор!
 
 let rec fac = 
   let rec fac' acc = function
@@ -390,6 +461,13 @@ let reverse<'a> =
 // fib - через аккумулятор сами
 
 
+
+
+
+
+
+
+
 let fib n =
     let rec fib' a b = function
         | n when n <= 0 -> a
@@ -404,20 +482,36 @@ let rec private fib' a b = function
 let fib = fib' 1 1
 
 
-
+// В F# строки как строки, а не список символов
 let explode (s:string) = [for c in s -> c]
 explode "sfsdaf"
 
+['a']
+
 (*
-Функция delete :: Char -> String -> String, кото-
+Функция delete :: char -> char list -> char list, кото-
 рая принимает на вход строку и символ и возвращает
 строку, в которой удалены все вхождения символа. При-
 мер: delete ’l’ "Hello world!" должно возвращать "Heo word!".
-Функция substitute :: Char -> Char -> String -> String,
+Функция substitute :: char -> char -> char list -> char list,
 которая заменяет в строке указанный символ на заданный.
 Пример: substitute ’e’ ’i’ "eigenvalue" возвращает
 "iiginvalui" 
 *)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 let rec delete symbol = function
     | [] -> []
