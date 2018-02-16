@@ -184,12 +184,14 @@ max [1;4;5;9;3]
 1 до n. ( Т.е. [1+1, 1+2, 1+3, ..., 1+n, 2+1, 2+2, ...,
 n+n] - всего n*n элементов) *)
 
-let g m n = [m + 1 .. m + n] 
+let g m n = [m .. m + n] 
 g 1 3
-let f xs = 
+let rec f xs n = 
     match xs with
     | [] -> []
-    | y::ys -> g y @ f ys
+    | y::ys -> g y n @ f ys n
+
+f [0..3] 3
 
 
 
