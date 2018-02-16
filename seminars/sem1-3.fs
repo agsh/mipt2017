@@ -191,7 +191,7 @@ let rec f xs n =
     | [] -> []
     | y::ys -> g y n @ f ys n
 
-f [0..3] 3
+f [1..3] 3
 
 
 
