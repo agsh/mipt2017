@@ -359,6 +359,15 @@ let rec gcd a b =
     | _ -> gcd a (b-a)
 
 
+// hs
+replicate' :: (Num i, Ord i) => i -> a -> [a]
+take' :: (Num i, Ord i) => i -> [a] -> [a]
+reverse' :: [a] -> [a]
+repeat' :: a -> [a]
+elem' :: (Eq a) => a -> [a] -> Bool
+zip' :: [a] -> [b] -> [(a,b)] -- зачем он нужен?
+append' :: [a] -> [a] -> [a]
+
 // replicate i:int -> a:'a -> 'a list
 // List.replicate
 List.replicate 6 'a' // take
@@ -372,6 +381,12 @@ replicate 300000 'a'
 Seq.replicate 300000000 'a'
 List.replicate 300000000 'a'
 
+let rec take n list =
+  match (n,list) with
+  | (_,[]) -> []
+  | (i,_) when i < 1 -> []
+  | (i,(x::xs)) -> x :: (take (i-1) xs)
+
 // zip a:'a list -> b:'b list -> ('a * 'b) list List.zip
 // самостоятельно
 List.zip [1;2;3] ['a';'b';'c']
@@ -381,10 +396,12 @@ List.zip [1;2;3] ['a';'b';'c']
 
 
 
+let rec append list1 list2 =
+  match list1 with
+  | [] -> list2
+  | (x::xs) -> x :: (append xs list2) 
 
-
-
-
+append [1..4] [5..9]
 
 
 
